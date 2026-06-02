@@ -9,26 +9,31 @@
         border: none;
         box-shadow: none;
     }
+
     .menu-btn {
         color: white;
         font-size: 28px;
         cursor: pointer;
     }
+
     .logo {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
     }
+
     .logo img {
         width: 150px;
         margin-bottom: 5px;
     }
+
     .search-box {
         display: flex;
         align-items: center;
         gap: 10px;
     }
+
     .search-box input {
         width: 220px;
         background: transparent;
@@ -38,9 +43,11 @@
         padding: 8px;
         outline: none;
     }
+
     .search-box input::placeholder {
         color: #d1d1d1;
     }
+
     .search-box button {
         background: none;
         border: none;
@@ -50,18 +57,19 @@
 </style>
 
 <header class="header">
-    <div class="menu-btn">
+    <div class="menu-btn" onclick="toggleSidebar()">
         ☰
     </div>
     <div class="logo">
         <img src="assets/LogoDarkTransparente.png" alt="Logo">
     </div>
-    <div class="search-box">
+    <form class="search-box" method="GET" action="home.php">
         <input
             type="text"
+            name="busca"
             placeholder="Pesquisar...">
-        <button>
+        <button type="submit">
             <img src="assets/icon_lupa.png" alt="Pesquisar" width="16">
         </button>
-    </div>
+    </form>
 </header>
