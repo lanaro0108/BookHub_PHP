@@ -18,14 +18,12 @@
 
     .logo-cabecalho {
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
     }
 
     .logo-cabecalho img {
         width: 150px;
-        margin-bottom: 5px;
     }
 
     .search-form {
@@ -64,7 +62,6 @@
         <a href="home.php">
             <img src="assets/LogoDarkTransparente.png" alt="BookHub">
         </a>
-        <img src="assets/LogoDarkTransparente.png" alt="Logo">
     </div>
     <form class="search-form" method="GET" action="home.php">
         <input
