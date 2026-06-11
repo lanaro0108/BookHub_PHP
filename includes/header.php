@@ -10,31 +10,31 @@
         box-shadow: none;
     }
 
-    .menu-btn {
+    .botao-menu {
         color: white;
         font-size: 28px;
         cursor: pointer;
     }
 
-    .logo {
+    .logo-cabecalho {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
     }
 
-    .logo img {
+    .logo-cabecalho img {
         width: 150px;
         margin-bottom: 5px;
     }
 
-    .search-box {
+    .search-form {
         display: flex;
         align-items: center;
         gap: 10px;
     }
 
-    .search-box input {
+    .search-form input {
         width: 220px;
         background: transparent;
         border: none;
@@ -44,11 +44,11 @@
         outline: none;
     }
 
-    .search-box input::placeholder {
+    .search-form input::placeholder {
         color: #d1d1d1;
     }
 
-    .search-box button {
+    .search-form button {
         background: none;
         border: none;
         font-size: 18px;
@@ -57,13 +57,13 @@
 </style>
 
 <header class="header">
-    <div class="menu-btn" onclick="toggleSidebar()">
+    <div class="botao-menu" onclick="toggleSidebar()">
         ☰
     </div>
-    <div class="logo">
+    <div class="logo-cabecalho">
         <img src="assets/LogoDarkTransparente.png" alt="Logo">
     </div>
-    <form class="search-box" method="GET" action="home.php">
+    <form class="search-form" method="GET" action="home.php">
         <input
             type="text"
             name="busca"

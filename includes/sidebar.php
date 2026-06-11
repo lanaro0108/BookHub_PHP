@@ -6,7 +6,6 @@
         width: 260px;
         height: 100vh;
         background: #032b5c;
-        transition: .3s;
         z-index: 1000;
         padding-top: 30px;
     }
@@ -15,7 +14,7 @@
         left: 0;
     }
 
-    .sidebar-close {
+    .fechar-sidebar {
         position: absolute;
         top: 14px;
         left: 14px;
@@ -30,16 +29,12 @@
         cursor: pointer;
     }
 
-    .sidebar-close:hover {
-        background: rgba(255, 255, 255, .25);
-    }
-
-    .sidebar-logo {
+    .logo-sidebar {
         text-align: center;
         margin-bottom: 40px;
     }
 
-    .sidebar-logo img {
+    .logo-sidebar img {
         width: 120px;
     }
 
@@ -59,51 +54,37 @@
         padding: 15px 25px;
         color: white;
         text-decoration: none;
-        transition: .3s;
-    }
-
-    .sidebar ul li a:hover {
-        background: rgba(255, 255, 255, .1);
-    }
-
-    .sidebar i {
-        width: 20px;
     }
 </style>
 
-<div class="sidebar" id="sidebar">
-    <button type="button" class="sidebar-close" onclick="toggleSidebar()">←</button>
-    <div class="sidebar-logo">
+<div class="sidebar" id="barra-lateral">
+    <button type="button" class="fechar-sidebar" onclick="toggleSidebar()">←</button>
+    <div class="logo-sidebar">
         <img src="assets/LogoDarkTransparente.png" alt="BookHub">
     </div>
     <ul>
         <li>
             <a href="home.php">
-                <i class="fa-solid fa-house"></i>
                 Dashboard
             </a>
         </li>
         <li>
             <a href="cadastrar.php">
-                <i class="fa-solid fa-plus"></i>
-                Cadastrar Livro
+                Cadastrar livro
             </a>
         </li>
         <li>
             <a href="editar.php">
-                <i class="fa-solid fa-pen"></i>
-                Editar Livro
+                Editar livro
             </a>
         </li>
         <li>
             <a href="excluir.php">
-                <i class="fa-solid fa-trash"></i>
-                Remover Livro
+                Remover livro
             </a>
         </li>
         <li>
             <a href="logout.php">
-                <i class="fa-solid fa-right-from-bracket"></i>
                 Sair
             </a>
         </li>

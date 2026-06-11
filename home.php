@@ -55,7 +55,7 @@ $livros = $stmt->fetchAll();
         }
 
         body {
-            background: #eceff3
+            background: #fff
         }
 
         header {
@@ -67,7 +67,7 @@ $livros = $stmt->fetchAll();
             padding: 0 40px
         }
 
-        .menu-btn {
+        .botao-menu {
             font-size: 25px;
             color: #fff
         }
@@ -116,7 +116,7 @@ $livros = $stmt->fetchAll();
             border-bottom: 1px solid #ddd
         }
 
-        .acao {
+        .botao-acao {
             display: flex;
             align-items: center;
             gap: 15px;
@@ -126,21 +126,16 @@ $livros = $stmt->fetchAll();
             color: #032b5c;
             background: #f5f5f5;
             border-radius: 10px;
-            transition: .3s
         }
 
-        .acao:hover {
-            transform: translateY(-3px)
-        }
-
-        .empty {
+        .vazio {
             text-align: center;
             padding: 80px 0
         }
 
-        .empty i {
-            font-size: 70px;
-            color: #032b5c
+        .vazio p {
+            color: #032b5c;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -151,7 +146,7 @@ $livros = $stmt->fetchAll();
     <div class="cards">
         <div class="card">
             <h3><?= $total ?></h3>
-            <span>Total de Livros</span>
+            <span>Total de livros</span>
         </div>
         <div class="card">
             <h3><?= $disponiveis ?></h3>
@@ -176,19 +171,18 @@ $livros = $stmt->fetchAll();
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($livros as $livro): ?>
-                            <tr>
-                                <td><?= $livro['titulo'] ?></td>
-                                <td><?= $livro['autor'] ?></td>
-                                <td><?= $livro['status_livro'] ?></td>
-                            </tr>
-                        <?php endforeach; ?>
+                        <?php foreach ($livros as $livro):
+                            echo "<tr>";
+                            echo "<td>" . $livro['titulo'] . "</td>";
+                            echo "<td>" . $livro['autor'] . "</td>";
+                            echo "<td>" . $livro['status_livro'] . "</td>";
+                            echo "</tr>";
+                        endforeach; ?>
                     </tbody>
                 </table>
 
             <?php else: ?>
-                <div class="empty">
-                    <i class="fa-solid fa-book-open"></i>
+                <div class="vazio">
                     <p>Nenhum livro cadastrado</p>
                 </div>
             <?php endif; ?>
@@ -196,17 +190,14 @@ $livros = $stmt->fetchAll();
 
         <div class="acoes">
             <h2>Ações</h2>
-            <a href="cadastrar.php" class="acao">
-                <i class="fa-solid fa-plus"></i>
-                Adicionar Livro
+            <a href="cadastrar.php" class="botao-acao">
+                Adicionar livro
             </a>
-            <a href="editar.php" class="acao">
-                <i class="fa-solid fa-pen"></i>
-                Editar Livro
+            <a href="editar.php" class="botao-acao">
+                Editar livro
             </a>
-            <a href="excluir.php" class="acao">
-                <i class="fa-solid fa-trash"></i>
-                Remover Livro
+            <a href="excluir.php" class="botao-acao">
+                Remover livro
             </a>
         </div>
     </div>
@@ -220,5 +211,4 @@ $livros = $stmt->fetchAll();
         }
     </script>
 </body>
-
 </html>

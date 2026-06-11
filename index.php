@@ -2,11 +2,6 @@
 session_start();
 require_once 'db/conexao.php';
 
-if (isset($_SESSION['id_usuario'])) {
-    header('Location: home.php');
-    exit();
-}
-
 $erro = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -20,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->execute();
     $usuario = $stmt->fetch();
 
-    if ($usuario && $senha === $usuario['senha']) {
+    if ($usuario && password_verify($senha, $usuario['senha'])) {
         $_SESSION['id_usuario'] = $usuario['id'];
         $_SESSION['nome_usuario'] = $usuario['nome'];
         header('Location: home.php');
@@ -111,12 +106,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             color: #fff;
             font-weight: 600;
             cursor: pointer;
-            transition: .3s
         }
 
-        .login-box button:hover {
-            background: #eee;
-            color: #032b5c
+        .cadastro {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .botao-cadastro {
+            color: #032b5c;
+            font-weight: 700;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .botao-cadastro:hover {
+            color: #021f47;
+            border-bottom-color: #032b5c;
         }
 
         .erro {
@@ -127,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         .banner {
             width: 50%;
-            background: url("../assets/banner.png") center/cover
+            background: url("../assets/banner.png")
         }
 
         @media(max-width:900px) {
@@ -137,6 +148,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             .login-box {
                 width: 100%
+            }
+
+            .botao-cadastro {
+                display: inline-block;
+                margin-top: 15px;
+                color: #032b5c;
+                font-weight: 700;
+                text-decoration: none;
+                border-bottom: 2px solid transparent;
             }
         }
     </style>
@@ -158,9 +178,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="erro"><?= htmlspecialchars($erro, ENT_QUOTES, 'UTF-8') ?></div>
                 <?php endif; ?>
             </form>
+            <div class="cadastro">
+                <p>Não possui conta?</p>
+                <a href="cadastrar.php" class="botao-cadastro">
+                    Cadastre-se
+                </a>
+            </div>
         </div>
         <div class="banner"></div>
     </div>
 </body>
-
 </html>
