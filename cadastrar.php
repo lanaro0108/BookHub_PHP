@@ -34,7 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if ($stmt->execute()) {
                 // Redireciona para a página de login após cadastro bem-sucedido
-                header('Location: index.php');
+                $mensagem = urlencode('Cadastro realizado com sucesso! Faça login.');
+                header('Location: index.php?sucesso=' . $mensagem . '&email=' . urlencode($email));
                 exit();
             } else {
                 $erro = 'Erro ao realizar cadastro.';

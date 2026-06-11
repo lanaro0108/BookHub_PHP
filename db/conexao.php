@@ -1,7 +1,7 @@
 <?php
 $host = 'localhost';
 $port = '5432';
-$dbname = 'biblioteca';
+$dbname = 'bookhub';
 $user = 'postgres';
 $password = 'postgres';
 

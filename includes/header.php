@@ -61,6 +61,9 @@
         ☰
     </div>
     <div class="logo-cabecalho">
+        <a href="home.php">
+            <img src="assets/LogoDarkTransparente.png" alt="BookHub">
+        </a>
         <img src="assets/LogoDarkTransparente.png" alt="Logo">
     </div>
     <form class="search-form" method="GET" action="home.php">

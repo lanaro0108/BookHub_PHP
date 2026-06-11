@@ -143,6 +143,9 @@ $livros = $stmt->fetchAll();
 <body>
     <?php include 'includes/header.php' ?>
     <?php include 'includes/sidebar.php' ?>
+    <div style="margin: 30px;">
+        <h2>Olá, <?= htmlspecialchars($_SESSION['nome_usuario'], ENT_QUOTES, 'UTF-8') ?>!</h2>
+    </div>
     <div class="cards">
         <div class="card">
             <h3><?= $total ?></h3>
@@ -190,7 +193,7 @@ $livros = $stmt->fetchAll();
 
         <div class="acoes">
             <h2>Ações</h2>
-            <a href="cadastrar.php" class="botao-acao">
+            <a href="add_livro.php" class="botao-acao">
                 Adicionar livro
             </a>
             <a href="editar.php" class="botao-acao">

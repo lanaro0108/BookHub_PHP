@@ -3,17 +3,26 @@ session_start();
 require_once 'db/conexao.php';
 
 $erro = '';
+$sucesso = '';
+$email = '';
+
+if (isset($_GET['sucesso'])) {
+    $sucesso = trim($_GET['sucesso']);
+}
+
+if (isset($_GET['email'])) {
+    $email = trim($_GET['email']);
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = trim($_POST['email']);
     $senha = trim($_POST['senha']);
 
-    $sql = "SELECT * FROM usuarios WHERE email = :email"; // Procura o usuário pelo email
-
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':email', $email);
-    $stmt->execute();
-    $usuario = $stmt->fetch();
+        $sql = "SELECT * FROM usuarios WHERE email = :email"; // Procura o usuário pelo email
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $usuario = $stmt->fetch();
 
     if ($usuario && password_verify($senha, $usuario['senha'])) {
         $_SESSION['id_usuario'] = $usuario['id'];
@@ -168,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <img src="assets/LogoLightTransparente.png" alt="BookHub">
             <form method="POST">
                 <label>Email</label>
-                <input type="email" name="email" placeholder="Insira seu email...">
+                <input type="email" name="email" placeholder="Insira seu email..." value="<?= htmlspecialchars($email, ENT_QUOTES, 'UTF-8') ?>">
 
                 <label>Senha</label>
                 <input type="password" name="senha" placeholder="Insira sua senha...">
@@ -176,6 +185,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <button type="submit">Entrar</button>
                 <?php if ($erro): ?>
                     <div class="erro"><?= htmlspecialchars($erro, ENT_QUOTES, 'UTF-8') ?></div>
+                <?php endif; ?>
+                <?php if ($sucesso): ?>
+                    <div class="sucesso"><?= htmlspecialchars($sucesso, ENT_QUOTES, 'UTF-8') ?></div>
                 <?php endif; ?>
             </form>
             <div class="cadastro">

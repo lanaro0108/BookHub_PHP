@@ -1,4 +1,4 @@
-CREATE DATABASE biblioteca;
+CREATE DATABASE bookhub;
 
 CREATE TABLE livros (
     id SERIAL PRIMARY KEY,

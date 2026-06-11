@@ -57,7 +57,7 @@
     }
 </style>
 
-<div class="sidebar" id="barra-lateral">
+<div class="sidebar" id="sidebar">
     <button type="button" class="fechar-sidebar" onclick="toggleSidebar()">←</button>
     <div class="logo-sidebar">
         <img src="assets/LogoDarkTransparente.png" alt="BookHub">
@@ -69,7 +69,7 @@
             </a>
         </li>
         <li>
-            <a href="cadastrar.php">
+            <a href="add_livro.php">
                 Cadastrar livro
             </a>
         </li>
