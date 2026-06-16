@@ -1,349 +1,281 @@
-# Documentação de Especificações de Requisito de Software (SRS)
-
-## Sistema de Gerenciamento de Biblioteca — BookHub
+# BookHub - Sistema de Gerenciamento de Biblioteca
 
 **Versão:** 1.0.0
 
-**Data:** 2026-05-28
+**Data:** 28/05/2026
 
 **Autor:** Pedro Lanaro
 
-**Protótipo:** [Link do Protótipo no Figma](https://www.figma.com/design/yHnwXPfZUMfKSKwJA8UfO0/BookHub?node-id=0-1&t=XBhpA4iAZF40JAAq-1)
+Sistema web para gerenciamento de bibliotecas, permitindo autenticação de usuários, cadastro, edição, exclusão e pesquisa de livros, além de controle de disponibilidade.
 
 ---
 
-# 1. Introdução
+## Índice
 
-## 1.1 Propósito
-
-Este documento apresenta os requisitos do sistema **BookHub**, desenvolvido para gerenciamento de livros em uma biblioteca.
-
-O documento tem como objetivo:
-
-* definir as funcionalidades do sistema;
-* organizar o desenvolvimento;
-* servir como base para implementação e testes.
-
----
-
-## 1.2 Escopo
-
-O sistema permitirá:
-
-* cadastro de livros;
-* edição de livros;
-* exclusão de livros;
-* visualização do acervo;
-* pesquisa de livros;
-* controle de disponibilidade.
-
-O sistema será desenvolvido como aplicação web utilizando:
-
-* HTML
-* CSS
-* JavaScript
-* PHP
-* PostgreSQL
+* Instalação
+* Configuração do Banco de Dados
+* Como Executar
+* Estrutura do Projeto
+* Funcionalidades
+* Páginas e Rotas
+* Tecnologias Utilizadas
+* Configurações Adicionais
+* Troubleshooting
 
 ---
 
-## 1.3 Definições
+# Instalação
 
-| Termo      | Definição                          |
-| ---------- | ---------------------------------- |
-| Livro      | Item cadastrado no sistema         |
-| Acervo     | Conjunto de livros registrados     |
-| Disponível | Livro disponível para empréstimo   |
-| Emprestado | Livro indisponível temporariamente |
+## 1. Clone o repositório
 
-### Acrônimos
+```bash
+git clone https://github.com/lanaro0108/BookHub_PHP.git
+cd BookHub_PHP
+```
 
-* **SGB** — Sistema de Gerenciamento de Biblioteca
-* **RF** — Requisito Funcional
-* **RNF** — Requisito Não Funcional
+## 2. Verifique os requisitos
 
----
-
-# 2. Descrição Geral do Sistema
-
-## 2.1 Perspectiva do Sistema
-
-O sistema será uma aplicação web executada em navegador.
-
-O usuário poderá acessar páginas para:
-
-* cadastrar livros;
-* editar livros;
-* remover livros;
-* visualizar informações.
+* PHP 7.4 ou superior
+* PostgreSQL 12 ou superior
+* Extensão PDO PostgreSQL habilitada
 
 ---
 
-## 2.2 Funções do Sistema
+# Configuração do Banco de Dados
 
-O sistema deve:
+## 1. Crie um banco vazio
 
-* cadastrar livros;
-* listar livros;
-* editar livros;
-* excluir livros;
-* pesquisar livros por autor;
-* alterar status do livro.
+```sql
+CREATE DATABASE bookhub;
+```
 
----
+## 2. Restaure o arquivo de backup
 
-## 2.3 Classes de Usuários
+Dentro da pasta do projeto:
 
-| Usuário       | Descrição          |
-| ------------- | ------------------ |
-| Bibliotecário | Gerencia o acervo  |
-| Usuário       | Consulta os livros |
+```bash
+psql -U postgres -d bookhub -f dump.sql
+```
 
----
+ou
 
-## 2.4 Ambiente Operacional
+```bash
+psql -U postgres bookhub < dump.sql
+```
 
-* Navegador Web
-* Banco de Dados MySQL/PostgreSQL
+## 3. Verifique a restauração
 
----
+Conecte-se ao banco:
 
-## 2.5 Restrições
+```bash
+psql -U postgres -d bookhub
+```
 
-* Sistema local
-* Necessário banco de dados
-* Sem login avançado
+Liste as tabelas:
 
----
+```sql
+\dt
+```
 
-## 2.6 Suposições
+Resultado esperado:
 
-* Usuário possui conhecimentos básicos de informática
-* Banco de dados configurado corretamente
+```text
+livros
+usuarios
+```
 
----
+Verifique os usuários cadastrados:
 
-# 3. Requisitos do Sistema
+```sql
+SELECT * FROM usuarios;
+```
 
-## 3.1 Requisitos Funcionais
-
----
-
-### RF-001 — Cadastro de Livros
-
-**Descrição:** Permitir cadastrar livros no sistema.
-
-### Critérios de Aceitação
-
-* [ ] Inserção de título
-* [ ] Inserção de autor
-* [ ] Inserção de gênero
-* [ ] Inserção do ano de publicação
-* [ ] Definição do status do livro
-* [ ] Cadastro salvo no banco
+O arquivo `dump.sql` já contém toda a estrutura do banco de dados (tabelas, sequências, constraints e dados de exemplo). Não é necessário executar um arquivo `schema.sql`.
 
 ---
 
-### RF-002 — Listagem de Livros
+# Como Executar
 
-**Descrição:** Exibir todos os livros cadastrados.
+## Utilizando o servidor embutido do PHP
 
-### Critérios de Aceitação
+No diretório do projeto:
 
-* [ ] Mostrar tabela de livros
-* [ ] Exibir título, autor, gênero e status
-* [ ] Atualizar automaticamente após cadastro
+```bash
+php -S localhost:8000
+```
 
----
+Abra o navegador:
 
-### RF-003 — Edição de Livros
-
-**Descrição:** Permitir editar livros cadastrados.
-
-### Critérios de Aceitação
-
-* [ ] Buscar livro pelo ID
-* [ ] Alterar informações
-* [ ] Atualizar no banco de dados
-* [ ] Exibir mensagem de sucesso
-
----
-
-### RF-004 — Exclusão de Livros
-
-**Descrição:** Permitir excluir livros cadastrados.
-
-### Critérios de Aceitação
-
-* [ ] Selecionar livro
-* [ ] Confirmar exclusão
-* [ ] Remover do banco
-* [ ] Atualizar listagem
-
----
-
-### RF-005 — Busca de Livros
-
-**Descrição:** Permitir pesquisar livros por autor.
-
-### Critérios de Aceitação
-
-* [ ] Campo de pesquisa
-* [ ] Busca por autor
-* [ ] Exibição dos resultados
-
----
-
-### RF-006 — Controle de Status
-
-**Descrição:** Permitir alterar status do livro.
-
-### Critérios de Aceitação
-
-* [ ] Status disponível
-* [ ] Status emprestado
-* [ ] Atualização visual do status
-
----
-
-## 3.2 Requisitos Não Funcionais
-
----
-
-### RNF-001 — Usabilidade
-
-Interface simples e intuitiva.
-
----
-
-### RNF-002 — Desempenho
-
-Respostas rápidas inferiores a 1 segundo.
-
----
-
-### RNF-003 — Responsividade
-
-Sistema adaptável para diferentes tamanhos de tela.
-
----
-
-### RNF-004 — Organização
-
-Separação dos arquivos por funcionalidade.
-
----
-
-### RNF-005 — Validação
-
-Validação obrigatória dos dados inseridos.
-
----
-
-# 4. Regras de Negócio
-
-| Código | Regra                             |
-| ------ | --------------------------------- |
-| RN-001 | O título do livro é obrigatório   |
-| RN-002 | O autor é obrigatório             |
-| RN-003 | O ano deve ser válido             |
-| RN-004 | Todo livro deve possuir status    |
-| RN-005 | Exclusão deve possuir confirmação |
-
----
-
-# 5. Estrutura do Sistema
-
-## 5.1 Páginas do Sistema
-
-| Página        | Função                 |
-| ------------- | ---------------------- |
-| login.php     | Tela de login          |
-| index.php     | Dashboard principal    |
-| cadastrar.php | Cadastro de livros     |
-| editar.php    | Edição de livros       |
-| excluir.php   | Exclusão de livros     |
-| conexao.php   | Conexão com banco      |
-| style.css     | Estilização do sistema |
-
----
-
-## 5.2 Fluxo do Sistema
-
-```mermaid id="f0jcnj"
-flowchart TD
-
-Inicio --> Login
-Login --> Dashboard
-Dashboard --> Cadastro
-Dashboard --> Editar
-Dashboard --> Excluir
-Cadastro --> BancoDeDados
-Editar --> BancoDeDados
-Excluir --> BancoDeDados
+```text
+http://localhost:8000
 ```
 
 ---
 
-## 5.3 Fluxo de Cadastro
+# Estrutura do Projeto
 
-```mermaid id="4k6zvz"
-flowchart TD
-
-Formulario --> Validacao
-Validacao --> Cadastro
-Cadastro --> Banco
-Banco --> Sucesso
+```text
+BookHub/
+├── index.php
+├── cadastrar.php
+├── home.php
+├── add_livro.php
+├── editar.php
+├── excluir.php
+├── logout.php
+├── db/
+│   └── conexao.php
+├── includes/
+│   ├── header.php
+│   └── sidebar.php
+├── assets/
+├── css/
+│   └── styles.css
+├── dump.sql
+└── README.md
 ```
 
 ---
 
-## 5.4 Fluxo de Exclusão
+# Configuração da Conexão
 
-```mermaid id="h9u0av"
-flowchart TD
+Arquivo:
 
-SelecionarLivro --> Confirmar
-Confirmar --> Excluir
-Excluir --> AtualizarTabela
+```text
+db/conexao.php
+```
+
+Exemplo:
+
+```php
+$host = 'localhost';
+$port = '5432';
+$dbname = 'bookhub';
+$user = 'postgres';
+$password = 'postgres';
+```
+
+Altere os valores conforme sua instalação do PostgreSQL.
+
+---
+
+# Funcionalidades
+
+## Autenticação
+
+* Cadastro de usuários
+* Login com validação de credenciais
+* Senhas protegidas com `password_hash()`
+* Encerramento seguro de sessão
+
+## Gerenciamento de Livros
+
+* Cadastro de livros
+* Edição de informações
+* Exclusão de registros
+* Pesquisa por título ou autor
+* Controle de disponibilidade
+
+## Dashboard
+
+* Total de livros
+* Livros disponíveis
+* Livros emprestados
+* Listagem rápida do acervo
+
+## Segurança
+
+* Sessões protegidas
+* Prepared Statements (PDO)
+* Proteção contra SQL Injection
+* Escape de saída com `htmlspecialchars()`
+
+---
+
+# Páginas e Rotas
+
+| Página          | Rota             |
+| --------------- | ---------------- |
+| Login           | `/index.php`     |
+| Cadastro        | `/cadastrar.php` |
+| Dashboard       | `/home.php`      |
+| Adicionar Livro | `/add_livro.php` |
+| Editar Livro    | `/editar.php`    |
+| Excluir Livro   | `/excluir.php`   |
+| Logout          | `/logout.php`    |
+
+---
+
+# Tecnologias Utilizadas
+
+| Tecnologia | Finalidade      |
+| ---------- | --------------- |
+| PHP        | Backend         |
+| PostgreSQL | Banco de Dados  |
+| HTML5      | Estrutura       |
+| CSS3       | Estilização     |
+| JavaScript | Interatividade  |
+| PDO        | Acesso ao banco |
+
+---
+
+# Configurações Adicionais
+
+### Alterar credenciais do banco de dados
+
+Edite o arquivo `db/conexao.php`:
+
+```php
+$host = 'seu_host';
+$port = 'sua_porta';
+$dbname = 'seu_banco';
+$user = 'seu_usuario';
+$password = 'sua_senha';
+```
+
+### Alterar a porta do servidor PHP
+
+```bash
+php -S localhost:3000
 ```
 
 ---
 
-# 6. Banco de Dados
+# Troubleshooting
 
-## 6.1 Tabela Livros
+### Erro de conexão com o banco
 
-```sql id="0s7sh8"
-CREATE TABLE livros (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    titulo VARCHAR(150),
-    autor VARCHAR(100),
-    genero VARCHAR(50),
-    ano_publicacao INT,
-    status_livro VARCHAR(20)
-);
+Verifique:
+
+* Se o PostgreSQL está em execução.
+* Se as credenciais em `db/conexao.php` estão corretas.
+* Se o banco `bookhub` foi criado e restaurado.
+
+### Erro "relation does not exist"
+
+Execute novamente:
+
+```bash
+psql -U postgres -d bookhub -f dump.sql
+```
+
+### Página em branco
+
+Ative temporariamente a exibição de erros:
+
+```php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+```
+
+### Porta já em uso
+
+Inicie o servidor em outra porta:
+
+```bash
+php -S localhost:3000
 ```
 
 ---
 
-# 7. Interface do Sistema
-
-O sistema possui interface moderna baseada em dashboard administrativo.
-
-Características visuais:
-
-* sidebar lateral;
-* navbar superior;
-* cards informativos;
-* tabelas organizadas;
-* formulários minimalistas;
-* tema em azul escuro.
-
----
-
-# 8. Controle de Versões
-
-| Versão | Data       | Autor | Modificação    |
-| ------ | ---------- | ----- | -------------- |
-| 1.0.0  | 2026-05-28 | Pedro Lanaro  | Versão Inicial |
+Desenvolvido por Pedro Lanaro para facilitar o gerenciamento de bibliotecas.
