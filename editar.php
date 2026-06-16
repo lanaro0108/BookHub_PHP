@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $id) {
                 ':id' => $id
             ]);
             $sucesso = 'Livro atualizado com sucesso!';
-            header('Location: editar.php');
+            header('Location: editar.php?id=' . $id . '&sucesso=' . urlencode($sucesso));
             exit();
         } catch (PDOException $e) {
             $erro = 'Erro ao atualizar livro.';
@@ -74,29 +74,9 @@ if ($id) {
 
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="assets/Icone.png">
     <title>Editar Livro - BookHub</title>
     <link rel="stylesheet" href="css/styles.css">
-</head>
-        }
-
-        .sucesso {
-            background: #e5ffe5;
-            color: #1e7e1e;
-            border: 1px solid #99ff99;
-        }
-
-        .vazio {
-            text-align: center;
-            padding: 40px 0;
-            color: #032b5c;
-        }
-
-        @media (max-width: 900px) {
-            .container-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
 </head>
 
 <body>

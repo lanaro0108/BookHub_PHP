@@ -67,7 +67,8 @@
         <input
             type="text"
             name="busca"
-            placeholder="Pesquisar...">
+            placeholder="Pesquisar..."
+            value="<?= htmlspecialchars(($_GET['busca'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
         <button type="submit">
             <img src="assets/icon_lupa.png" alt="Pesquisar" width="16">
         </button>

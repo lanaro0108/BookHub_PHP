@@ -53,6 +53,7 @@ if ($id) {
 
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="assets/Icone.png">
     <title>Remover Livro - BookHub</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>

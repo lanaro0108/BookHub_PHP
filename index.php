@@ -44,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="assets/Icone.png">
     <title>Login - BookHub</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>

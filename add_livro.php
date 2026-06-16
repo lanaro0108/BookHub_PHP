@@ -12,7 +12,7 @@ $erro = '';
 $sucesso = '';
 
 // Processa o envio do formulário para adicionar um novo livro.
-if ($_SERVER['REQUEST_METHOD'] === 'POST') // Método POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') { // Método POST
     $titulo = trim($_POST['titulo'] ?? '');
     $autor = trim($_POST['autor'] ?? '');
     $genero = trim($_POST['genero'] ?? '');
@@ -44,12 +44,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') // Método POST
             $erro = 'Erro ao adicionar livro.';
         }
     }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="assets/Icone.png">
     <title>Adicionar Livro - BookHub</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>

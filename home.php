@@ -48,6 +48,7 @@ $livros = $stmt->fetchAll();
 
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="assets/Icone.png">
     <title>BookHub</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -88,9 +89,9 @@ $livros = $stmt->fetchAll();
                     <tbody>
                         <?php foreach ($livros as $livro):
                             echo "<tr>";
-                            echo "<td>" . $livro['titulo'] . "</td>";
-                            echo "<td>" . $livro['autor'] . "</td>";
-                            echo "<td>" . $livro['status_livro'] . "</td>";
+                            echo "<td>" . htmlspecialchars($livro['titulo'], ENT_QUOTES, 'UTF-8') . "</td>";
+                            echo "<td>" . htmlspecialchars($livro['autor'], ENT_QUOTES, 'UTF-8') . "</td>";
+                            echo "<td>" . htmlspecialchars($livro['status_livro'], ENT_QUOTES, 'UTF-8') . "</td>";
                             echo "</tr>";
                         endforeach; ?>
                     </tbody>
