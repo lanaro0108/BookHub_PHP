@@ -1,4 +1,5 @@
 <?php
+// Inicializa sessão, carrega conexão e processa remoção de registros de livros.
 session_start();
 require_once 'db/conexao.php';
 
@@ -14,6 +15,7 @@ $livros = [];
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
 
+// Processa confirmação de exclusão quando o formulário é submetido.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $id) {
     $sql = 'DELETE FROM livros WHERE id = :id';
     $stmt = $pdo->prepare($sql);
@@ -28,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $id) {
     }
 }
 
+// Se um ID for informado, recupera os dados do livro para confirmação.
 if ($id) {
     $sql = 'SELECT * FROM livros WHERE id = :id';
     $stmt = $pdo->prepare($sql);
@@ -38,6 +41,7 @@ if ($id) {
         $erro = 'Livro não encontrado.';
     }
 } else {
+    // Caso contrário, lista todos os livros disponíveis para remoção.
     $sql = 'SELECT * FROM livros ORDER BY titulo ASC';
     $stmt = $pdo->prepare($sql);
     $stmt->execute();

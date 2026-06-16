@@ -1,10 +1,12 @@
 <?php
+// Configura e inicializa a conexão PDO com o banco de dados PostgreSQL.
 $host = 'localhost';
 $port = '5432';
 $dbname = 'bookhub';
 $user = 'postgres';
 $password = 'postgres';
 
+// Data Source Name (DSN) utilizado pelo PDO para estabelecer a conexão.
 $dsn = "pgsql:host=$host;port=$port;dbname=$dbname"; 
 // Data Source Name, é a string de conexão que o PDO usa para se conectar ao banco de dados
 

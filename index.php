@@ -1,4 +1,6 @@
 <?php
+// Inicializa a sessão, carrega a conexão com o banco de dados
+// e processa as requisições de autenticação de usuário.
 session_start();
 require_once 'db/conexao.php';
 
@@ -14,16 +16,18 @@ if (isset($_GET['email'])) {
     $email = trim($_GET['email']);
 }
 
+// Processa submissão do formulário de login e autentica o usuário.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = trim($_POST['email']);
     $senha = trim($_POST['senha']);
 
-        $sql = "SELECT * FROM usuarios WHERE email = :email"; // Procura o usuário pelo email
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-        $usuario = $stmt->fetch();
+    $sql = "SELECT * FROM usuarios WHERE email = :email"; // Procura o usuário pelo email
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+    $usuario = $stmt->fetch();
 
+    // Verifica credenciais e inicializa variáveis de sessão em caso de sucesso.
     if ($usuario && password_verify($senha, $usuario['senha'])) {
         $_SESSION['id_usuario'] = $usuario['id'];
         $_SESSION['nome_usuario'] = $usuario['nome'];
@@ -31,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    $erro = "E-mail ou senha inválidos."; // Se chegar aqui, é pq o login falhou
+    $erro = "E-mail ou senha inválidos."; // Login inválido
 }
 ?>
 

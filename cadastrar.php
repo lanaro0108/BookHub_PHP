@@ -1,4 +1,5 @@
 <?php
+// Inicializa sessão, conecta ao banco e processa o cadastro de novos usuários.
 session_start();
 require_once 'db/conexao.php';
 
@@ -7,16 +8,19 @@ $sucesso = '';
 $nome = '';
 $email = '';
 
+// Processa submissão do formulário de cadastro.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = trim($_POST['nome']);
     $email = trim($_POST['email']);
     $senha = trim($_POST['senha']);
 
+    // Valida campos e formato de e-mail.
     if (empty($nome) || empty($email) || empty($senha)) {
         $erro = 'Preencha todos os campos.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erro = 'Informe um e-mail válido.';
     } else {
+        // Verifica se o e-mail já está cadastrado.
         $sql = 'SELECT id FROM usuarios WHERE email = :email';
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':email', $email);
@@ -25,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->fetch()) {
             $erro = 'Este e-mail já está cadastrado.';
         } else {
+            // Insere novo usuário com senha hash.
             $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
             $sql = 'INSERT INTO usuarios (nome, email, senha) VALUES (:nome, :email, :senha)';
             $stmt = $pdo->prepare($sql);

@@ -58,6 +58,7 @@
 </style>
 
 <div class="sidebar" id="sidebar">
+    <!-- Botão para fechar a sidebar, posicionado no canto superior esquerdo -->
     <button type="button" class="fechar-sidebar" onclick="toggleSidebar()">←</button>
     <div class="logo-sidebar">
         <img src="assets/LogoDarkTransparente.png" alt="BookHub">

@@ -1,4 +1,5 @@
 <?php
+// Inicializa sessão, garante autenticação e processa a adição de novos livros.
 session_start();
 require_once 'db/conexao.php';
 
@@ -10,23 +11,27 @@ if (!isset($_SESSION['id_usuario'])) {
 $erro = '';
 $sucesso = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+// Processa o envio do formulário para adicionar um novo livro.
+if ($_SERVER['REQUEST_METHOD'] === 'POST') // Método POST
     $titulo = trim($_POST['titulo'] ?? '');
     $autor = trim($_POST['autor'] ?? '');
     $genero = trim($_POST['genero'] ?? '');
     $ano_publicacao = trim($_POST['ano_publicacao'] ?? '');
     $status_livro = trim($_POST['status_livro'] ?? 'Disponível');
+    // trim() é usado para remover espaços em branco extras do início e do fim dos valores dos campos
 
-    if (empty($titulo) || empty($autor) || empty($genero) || empty($ano_publicacao)) {
+    // Validação básica dos campos.
+    if (empty($titulo) || empty($autor) || empty($genero) || empty($ano_publicacao)) { // Empty verifica se os campos estão vazios
         $erro = 'Preencha todos os campos.';
     } elseif (!is_numeric($ano_publicacao) || $ano_publicacao < 1000 || $ano_publicacao > date('Y')) {
         $erro = 'Ano de publicação inválido.';
     } else {
+        // Insere novo registro de livro no banco de dados usando parâmetros preparados.
         $sql = 'INSERT INTO livros (titulo, autor, genero, ano_publicacao, status_livro) VALUES (:titulo, :autor, :genero, :ano_publicacao, :status_livro)';
         $stmt = $pdo->prepare($sql);
         
         try {
-            $stmt->execute([
+            $stmt->execute([ // execute() é usado para executar a consulta SQL com os parâmetros fornecidos
                 ':titulo' => $titulo,
                 ':autor' => $autor,
                 ':genero' => $genero,
@@ -39,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $erro = 'Erro ao adicionar livro.';
         }
     }
-}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

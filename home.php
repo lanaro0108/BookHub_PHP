@@ -1,4 +1,5 @@
 <?php
+// Inicializa sessão, garante autenticação e executa consultas para o dashboard.
 session_start();
 
 require_once 'db/conexao.php';
@@ -8,8 +9,10 @@ if (!isset($_SESSION['id_usuario'])) {
     exit();
 }
 
+// Obtém termo de busca, se fornecido.
 $busca = $_GET['busca'] ?? '';
 
+// Consultas sumarizadas para estatísticas no painel.
 $total = $pdo->query("SELECT COUNT(*) FROM livros")->fetchColumn();
 
 $disponiveis = $pdo->query("
@@ -24,6 +27,7 @@ FROM livros
 WHERE status_livro = 'Emprestado'
 ")->fetchColumn();
 
+// Consulta de listagem de livros com filtro de busca.
 $sql = "
 SELECT *
 FROM livros

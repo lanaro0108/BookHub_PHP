@@ -1,4 +1,6 @@
 <?php
+// Encerra a sessão do usuário de forma segura, removendo cookies de sessão
+// e destruindo os dados de sessão em servidor, em seguida redireciona ao login.
 session_start();
 $_SESSION = [];
 if (ini_get('session.use_cookies')) {

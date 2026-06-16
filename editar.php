@@ -1,4 +1,5 @@
 <?php
+// Inicializa a sessão, carrega a conexão com o banco de dados e prepara o ambiente para processar operações de edição de livros.
 session_start();
 require_once 'db/conexao.php';
 
@@ -14,18 +15,21 @@ $livros = [];
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
 
+// Trata submissão do formulário de edição quando um ID de livro é fornecido.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $id) {
-    $titulo = trim($_POST['titulo'] ?? '');
+    $titulo = trim($_POST['titulo'] ?? ''); // Trim para remover espaços extras
     $autor = trim($_POST['autor'] ?? '');
     $genero = trim($_POST['genero'] ?? '');
     $ano_publicacao = trim($_POST['ano_publicacao'] ?? '');
     $status_livro = trim($_POST['status_livro'] ?? 'Disponível');
 
+    // Validação dos campos do formulário
     if (empty($titulo) || empty($autor) || empty($genero) || empty($ano_publicacao)) {
         $erro = 'Preencha todos os campos.';
     } elseif (!is_numeric($ano_publicacao) || $ano_publicacao < 1000 || $ano_publicacao > date('Y')) {
         $erro = 'Ano de publicação inválido.';
     } else {
+        // Atualiza o registro do livro no banco de dados utilizando parâmetros preparados.
         $sql = 'UPDATE livros SET titulo = :titulo, autor = :autor, genero = :genero, ano_publicacao = :ano_publicacao, status_livro = :status_livro WHERE id = :id';
         $stmt = $pdo->prepare($sql);
         
@@ -47,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $id) {
     }
 }
 
+// Quando um ID é fornecido, recupera os dados do livro específico para edição.
 if ($id) {
     $sql = 'SELECT * FROM livros WHERE id = :id';
     $stmt = $pdo->prepare($sql);
@@ -57,6 +62,7 @@ if ($id) {
         $erro = 'Livro não encontrado.';
     }
 } else {
+    // Caso contrário, lista todos os livros para seleção.
     $sql = 'SELECT * FROM livros ORDER BY titulo ASC';
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
@@ -267,19 +273,26 @@ if ($id) {
 </head>
 
 <body>
-    <?php include 'includes/header.php' ?>
-    <?php include 'includes/sidebar.php' ?>
+    <?php
+    // Inclui o cabeçalho compartilhado da aplicação.
+    include 'includes/header.php';
+    // Inclui a barra lateral com o menu de navegação.
+    include 'includes/sidebar.php';
+    ?>
 
     <div class="container-main">
-        <?php if ($livro): ?>
+        <?php // Exibe o formulário de edição quando um livro foi selecionado
+        if ($livro): ?>
             <div class="container-formulario">
                 <h2>Editar Livro</h2>
 
-                <?php if ($erro): ?>
+                <?php // Exibe mensagem de erro quando aplicável
+                if ($erro): ?>
                     <div class="mensagem erro"><?= htmlspecialchars($erro, ENT_QUOTES, 'UTF-8') ?></div>
                 <?php endif; ?>
 
-                <?php if ($sucesso): ?>
+                <?php // Exibe mensagem de sucesso quando aplicável
+                if ($sucesso): ?>
                     <div class="mensagem sucesso"><?= htmlspecialchars($sucesso, ENT_QUOTES, 'UTF-8') ?></div>
                 <?php endif; ?>
 
@@ -318,7 +331,8 @@ if ($id) {
                     </div>
                 </form>
             </div>
-        <?php else: ?>
+        <?php // Caso nenhum livro esteja selecionado, exibe a lista para escolha
+        else: ?>
             <div class="tabela-livros">
                 <h2>Selecione um Livro para Editar</h2>
 
